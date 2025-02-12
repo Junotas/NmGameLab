@@ -16,6 +16,9 @@ public class NmGame {
         Player current = player1;
         Player other = player2;
 
+        // Show initial state
+        System.out.println("Spelet börjar med " + sticks + " stickor på bordet.\n");
+
         while (sticks > 1) {
             int max = sticks / 2;
             int taken = current.takeSticks(sticks);
@@ -24,14 +27,22 @@ public class NmGame {
                 return;
             }
             sticks -= taken;
-            System.out.println(current.getName() + " tar " + taken + " sticka(n). Stickor kvar: " + sticks);
+
+            // Plural / singular handling
+            String stickWord = (taken == 1) ? " sticka" : " stickor";
+            String remainWord = (sticks == 1) ? " sticka" : " stickor";
+            System.out.println(current.getName() + " tar " + taken + stickWord + ". "
+                    + "Det finns nu " + sticks + remainWord + " kvar.");
+
             // Byt spelare
             Player temp = current;
             current = other;
             other = temp;
         }
 
-        System.out.println("\nEndast 1 stick kvar. " + current.getName() + " kan inte göra ett giltigt drag.");
+        // If there's only 1 stick left, current can't make a valid move
+        System.out.println("\nDet ligger bara 1 sticka kvar på bordet. "
+                + current.getName() + " kan inte göra ett giltigt drag.");
         System.out.println(other.getName() + " vinner spelet!");
     }
 }

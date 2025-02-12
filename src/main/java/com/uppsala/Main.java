@@ -5,6 +5,10 @@ import com.uppsala.player.Player;
 
 public class Main {
     public static void main(String[] args) {
+        // Intro message
+        System.out.println("=== Välkommen till Nm-spelet! ===");
+        System.out.println("Du och en NPC turas om att ta mellan 1 och hälften av de stickor som finns.\n");
+
         if (args.length < 1) {
             System.out.println("Ange antal stickor vid start som ett argument.");
             System.exit(1);

@@ -3,7 +3,7 @@ package com.uppsala.player;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public HumanPlayer(String name) {
         super(name);
@@ -16,12 +16,15 @@ public class HumanPlayer extends Player {
         if (max < 1) {
             max = 1;
         }
-        System.out.println("\n" + name + ", det är din tur.");
-        System.out.println("Stickor kvar: " + sticksRemaining);
-        System.out.print("Ange antal stickor att ta (min 1, max " + max + "): ");
+
+        System.out.println("\n=== Din tur, " + name + "! ===");
+        System.out.println("Det ligger " + sticksRemaining + " stickor på bordet.");
+        System.out.print("Hur många stickor vill du ta (1-" + max + ")? ");
+
+
         int taken = scanner.nextInt();
         while (taken < 1 || taken > max) {
-            System.out.print("Ogiltigt antal. Ange ett tal mellan 1 och " + max + ": ");
+            System.out.print("Ogiltig inmatning. Ange ett tal mellan 1 och " + max + ": ");
             taken = scanner.nextInt();
         }
         return taken;

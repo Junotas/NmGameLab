@@ -13,7 +13,8 @@ public class NPC extends Player {
         }
         // Enkel strategi: NPC tar alltid 1 sticka.
         int taken = 1;
-        System.out.println("\n" + name + " (NPC) tar " + taken + " sticka(n).");
+        System.out.println("\n" + name + " tar " + taken + " sticka.");
+
         return taken;
     }
 }
