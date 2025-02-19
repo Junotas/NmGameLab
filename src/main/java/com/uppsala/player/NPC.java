@@ -1,8 +1,13 @@
 package com.uppsala.player;
 
+import java.util.Random;
+
 public class NPC extends Player {
+    private final Random random;
+
     public NPC(String name) {
         super(name);
+        this.random = new Random();
     }
 
     @Override
@@ -11,9 +16,9 @@ public class NPC extends Player {
         if (max < 1) {
             max = 1;
         }
-        // Enkel strategi: NPC tar alltid 1 sticka.
-        int taken = 1;
-        System.out.println("\n" + name + " tar " + taken + " sticka.");
+        // NPC tar ett slumpmässigt antal stickor mellan 1 och max
+        int taken = random.nextInt(max) + 1;
+        System.out.println("\n" + name + " tar " + taken + (taken == 1 ? " sticka." : " stickor."));
 
         return taken;
     }
