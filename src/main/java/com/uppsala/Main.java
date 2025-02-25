@@ -18,27 +18,28 @@ public class Main {
         System.out.println(WELCOME_MESSAGE);
         System.out.println(GAME_DESCRIPTION);
 
-        // Fråga användaren efter namn
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(ENTER_NAME_PROMPT);
-        String playerName = scanner.nextLine();
+        // Använd try-with-resources för att hantera Scanner och se till att den stängs automatiskt
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print(ENTER_NAME_PROMPT);
+            String playerName = scanner.nextLine();
 
-        if (args.length < 1) {
-            System.out.println(ARGUMENT_ERROR);
-            System.exit(1);
+            if (args.length < 1) {
+                System.out.println(ARGUMENT_ERROR);
+                System.exit(1);
+            }
+            int sticks = Integer.parseInt(args[0]);
+            if (sticks < 1) {
+                System.out.println(MIN_STICKS_ERROR);
+                System.exit(1);
+            }
+
+            // Skapa spelare: skicka med samma Scanner till HumanPlayer
+            Player human = new HumanPlayer(playerName, scanner);
+            Player npc = new NPC("NPC");
+
+            // Skapa och starta spelet
+            NmGame game = new NmGame(human, npc, sticks);
+            game.play();
         }
-        int sticks = Integer.parseInt(args[0]);
-        if (sticks < 1) {
-            System.out.println(MIN_STICKS_ERROR);
-            System.exit(1);
-        }
-
-        // Skapa spelare: användaren med valt namn samt NPC
-        Player human = new HumanPlayer(playerName);
-        Player npc = new NPC("NPC");
-
-        // Skapa och starta spelet
-        NmGame game = new NmGame(human, npc, sticks);
-        game.play();
     }
 }

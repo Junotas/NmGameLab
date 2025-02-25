@@ -1,5 +1,6 @@
 package com.uppsala.player;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
@@ -14,10 +15,12 @@ public class HumanPlayer extends Player {
     private static final String ASK_STICKS_SUFFIX = ")? ";
     private static final String INVALID_INPUT = "Ogiltig inmatning. Ange ett tal mellan 1 och ";
     private static final String COLON = ": ";
+    private static final String NON_INT_INPUT = "Ogiltig inmatning. Vänligen ange ett heltal.";
 
-    public HumanPlayer(String name) {
+
+    public HumanPlayer(String name, Scanner scanner) {
         super(name);
-        scanner = new Scanner(System.in);
+        this.scanner = scanner;
     }
 
     @Override
@@ -29,12 +32,23 @@ public class HumanPlayer extends Player {
 
         System.out.println(TURN_HEADER + name + TURN_FOOTER);
         System.out.println(STICKS_ON_TABLE_PREFIX + sticksRemaining + STICKS_ON_TABLE_SUFFIX);
-        System.out.print(ASK_STICKS_PREFIX + max + ASK_STICKS_SUFFIX);
 
-        int taken = scanner.nextInt();
-        while (taken < 1 || taken > max) {
-            System.out.print(INVALID_INPUT + max + COLON);
-            taken = scanner.nextInt();
+        int taken = 0;
+        boolean validInput = false;
+        // Fortsätt fråga tills vi får ett giltigt heltal inom intervallet
+        while (!validInput) {
+            System.out.print(ASK_STICKS_PREFIX + max + ASK_STICKS_SUFFIX);
+            try {
+                taken = scanner.nextInt();
+                if (taken >= 1 && taken <= max) {
+                    validInput = true;
+                } else {
+                    System.out.println(INVALID_INPUT + max + COLON);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println(NON_INT_INPUT);
+                scanner.next();
+            }
         }
         return taken;
     }
